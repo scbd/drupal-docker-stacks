@@ -9,6 +9,8 @@ volumes:
     external: true
   db-data:
     external: true
+  db-init-data:
+    external: true
   docker-sync:
     external: true
 
@@ -109,8 +111,8 @@ services:
     networks:
       - proxy
     volumes:
-      - db-data/init:/docker-entrypoint-initdb.d # Place init .sql file(s) here.
-      - db-data/mysql:/var/lib/mysql # I want to manage volumes manually.
+      - db-init-data:/docker-entrypoint-initdb.d # Place init .sql file(s) here.
+      - db-data:/var/lib/mysql # I want to manage volumes manually.
     environment:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: drupalLocal

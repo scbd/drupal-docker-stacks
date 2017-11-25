@@ -4,7 +4,7 @@ while true; do
      " yn
     case $yn in
         [Yy]* ) sh ../secrets.sh; break;;
-        [Nn]* ) exit;;
+        [Nn]* ) break;;
         * ) echo "Please answer yes or no.";;
     esac
 done
@@ -14,13 +14,14 @@ while true; do
      " yn
     case $yn in
         [Yy]* ) sh ../proxy/init.sh; sh ../proxy/init.sh; break;;
-        [Nn]* ) exit;;
+        [Nn]* ) break;;
         * ) echo "Please answer yes or no.";;
     esac
 done
 
 docker volume create drupal-data
 docker volume create db-data
+docker volume create db-init-data
 docker volume create docker-sync
 docker network create --driver overlay --subnet 10.0.12.0/24 --opt encrypted=true drupal
 docker-sync start

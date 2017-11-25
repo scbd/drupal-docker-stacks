@@ -13,7 +13,7 @@
 },{
   "type": "stack",
   "title": "Protainer",
-  "description": "Portainer for local docker management",
+  "description": "Portainer for local SCBD docker management",
   "note": "deploys a local stack for portainer.",
   "categories": ["Docker"],
   "platform": "linux",
@@ -25,14 +25,14 @@
 },{
   "type": "stack",
   "title": "traefik",
-  "description": "traefik reverse proxy",
+  "description": "traefik reverse proxy for local SCBD dev",
   "note": "Deploy a local traefik stack for reverse proxy",
   "categories": ["proxy"],
   "platform": "linux",
-  "logo": "https://raw.githubusercontent.com/scbd/master/stacks/local/drupal/drupal-scbd.png",
+  "logo": "https://raw.githubusercontent.com/scbd/stacks/master/local/proxy/traefik.logo.png",
   "repository": {
     "url": "https://github.com/scbd/stacks",
-    "stackfile": "local/drupal/drupal.yml"
+    "stackfile": "local/proxy/proxy.yml"
   }
 }
 ]

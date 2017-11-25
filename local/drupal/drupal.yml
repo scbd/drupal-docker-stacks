@@ -1,0 +1,144 @@
+version: "3.4"
+networks:
+  drupal:
+    external: true
+  proxy:
+    external: true
+volumes:
+  drupal-data:
+    external: true
+  db-data:
+    external: true
+  docker-sync:
+    external: true
+
+services:
+  php:
+    image: wodby/drupal:8-7.1-3.0.0
+    networks:
+      - proxy
+    volumes:
+      - docker-sync/modules:/var/www/html/web/modules
+      - docker-sync/profiles:/var/www/html/web/profiles
+      - docker-sync/sites:/var/www/html/web/sites
+      - docker-sync/themes:/var/www/html/web/themes
+    environment:
+      PHP_SITE_NAME: dev
+      PHP_HOST_NAME: localhost:8000
+      PHP_SENDMAIL_PATH: /usr/sbin/sendmail -t -i -S mailhog:1025
+      PHP_FPM_CLEAR_ENV: "no"
+      DB_HOST: mariadb
+      DB_USER: drupal
+      DB_PASSWORD: drupal
+      DB_NAME: drupalLocal
+      DB_DRIVER: mysql
+    deploy:
+      labels:
+        - "traefik.enable=false"
+      replicas: 1
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 512M
+      restart_policy:
+        condition: any
+        delay: 10s
+        max_attempts: 3
+        window: 120s
+      update_config:
+        parallelism: 1
+        delay: 10s
+
+  nginx:
+    image: wodby/drupal-nginx:8-1.13-3.0.1
+    networks:
+      - proxy
+    environment:
+      NGINX_STATIC_CONTENT_OPEN_FILE_CACHE: "off"
+      NGINX_ERROR_LOG_LEVEL: debug
+      NGINX_BACKEND_HOST: php
+      NGINX_SERVER_ROOT: /var/www/html/web
+    volumes:
+      - docker-sync:/var/www/html
+    deploy:
+      labels:
+        - "traefik.enable=true"
+        - "traefik.port=80"
+        - "traefik.backend=nginx"
+        - "traefik.docker.network=proxy"
+        - "traefik.frontend.rule=Host:drupal.localhost"
+      replicas: 1
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 512M
+      restart_policy:
+        condition: any
+        delay: 10s
+        max_attempts: 3
+        window: 120s
+      update_config:
+        parallelism: 1
+        delay: 10s
+
+  mailhog:
+    image: mailhog/mailhog
+    networks:
+      - proxy
+    deploy:
+      labels:
+        - 'traefik.backend=mailhog'
+        - 'traefik.port=8025'
+        - 'traefik.frontend.rule=Host:mailhog.drupal.localhost'
+      replicas: 1
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 512M
+      restart_policy:
+        condition: any
+        delay: 10s
+        max_attempts: 3
+        window: 120s
+      update_config:
+        parallelism: 1
+        delay: 10s
+
+  mariadb:
+    image: wodby/mariadb:10.1-2.3.5
+    networks:
+      - proxy
+    volumes:
+      - db-data/init:/docker-entrypoint-initdb.d # Place init .sql file(s) here.
+      - db-data/mysql:/var/lib/mysql # I want to manage volumes manually.
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: drupalLocal
+      MYSQL_USER: drupal
+      MYSQL_PASSWORD: drupal
+    deploy:
+      labels:
+        - "traefik.enable=false"
+      replicas: 1
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 512M
+      restart_policy:
+        condition: any
+        delay: 10s
+        max_attempts: 3
+        window: 120s
+      update_config:
+        parallelism: 1
+        delay: 10s
+#  webgrind:
+#    image: wodby/webgrind:1.5-1.0.0
+#    environment:
+#      WEBGRIND_PROFILER_DIR: /mnt/files/xdebug/profiler
+#    labels:
+#      - 'traefik.backend=webgrind'
+#      - 'traefik.port=8080'
+#      - 'traefik.frontend.rule=Host:webgrind.drupal.docker.localhost'
+#    volumes:
+#      - files:/mnt/files

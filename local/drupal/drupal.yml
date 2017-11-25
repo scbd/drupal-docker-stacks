@@ -20,10 +20,7 @@ services:
     networks:
       - proxy
     volumes:
-      - docker-sync/modules:/var/www/html/web/modules
-      - docker-sync/profiles:/var/www/html/web/profiles
-      - docker-sync/sites:/var/www/html/web/sites
-      - docker-sync/themes:/var/www/html/web/themes
+      - docker-sync:/var/www/html
     environment:
       PHP_SITE_NAME: dev
       PHP_HOST_NAME: localhost:8000

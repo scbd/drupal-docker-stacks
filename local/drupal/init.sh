@@ -24,5 +24,5 @@ docker volume create db-data
 docker volume create db-init-data
 docker volume create docker-sync
 docker network create --driver overlay --subnet 10.0.12.0/24 --opt encrypted=true drupal
-docker-sync start
+nohup docker-sync start &
 docker stack deploy -c drupal.yml DRUPAL

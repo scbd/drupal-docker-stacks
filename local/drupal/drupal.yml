@@ -29,7 +29,7 @@ services:
       DB_HOST: mariadb
       DB_USER: drupal
       DB_PASSWORD: drupal
-      DB_NAME: drupalLocal
+      DB_NAME: drupal
       DB_DRIVER: mysql
     deploy:
       labels:
@@ -58,7 +58,7 @@ services:
       NGINX_BACKEND_HOST: php
       NGINX_SERVER_ROOT: /var/www/html/web
     volumes:
-      - docker-sync:/var/www/html
+      - docker-sync:/var/www/html:cached
     deploy:
       labels:
         - "traefik.enable=true"
@@ -105,14 +105,19 @@ services:
 
   mariadb:
     image: wodby/mariadb:10.1-2.3.5
+    ports:
+      - target: 3306
+        published: 3306
+        protocol: tcp
+        mode: host
     networks:
       - proxy
     volumes:
-      - db-init-data:/docker-entrypoint-initdb.d # Place init .sql file(s) here.
+#      - db-init-data:/docker-entrypoint-initdb.d # Place init .sql file(s) here.
       - db-data:/var/lib/mysql # I want to manage volumes manually.
     environment:
-      MYSQL_ROOT_PASSWORD: password
-      MYSQL_DATABASE: drupalLocal
+      MYSQL_ROOT_PASSWORD: drupal
+      MYSQL_DATABASE: drupal
       MYSQL_USER: drupal
       MYSQL_PASSWORD: drupal
     deploy:

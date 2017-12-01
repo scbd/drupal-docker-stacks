@@ -19,8 +19,6 @@ services:
         - portainer-data:/data
       deploy:
         replicas: 1
-        labels:
-          - "traefik.enable=false"
         resources:
           limits:
             memory: 50M

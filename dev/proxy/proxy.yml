@@ -1,0 +1,42 @@
+version: "3.4"
+networks:
+  proxy:
+    external: true
+volumes:
+  traefik-data:
+    external: true
+services:
+  traefik:
+    image: traefik
+    command:
+      -c --docker
+      --docker.swarmmode
+      --docker.domain=localhost
+      --docker.watch=true
+      --web=true
+      --debug=true
+      --accesslogsfile=/dev/stdout
+      --logLevel=INFO
+    labels:
+      - "traefik.enable=false"
+    networks:
+      - proxy
+    ports:
+      - 80:80
+      - 8080:8080
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - traefik-data:/etc/traefik
+    deploy:
+      mode: global
+      resources:
+        limits:
+          memory: 250M
+      restart_policy:
+        condition: any
+        delay: 10s
+        max_attempts: 3
+        window: 120s
+      update_config:
+        parallelism: 1
+        delay: 5s

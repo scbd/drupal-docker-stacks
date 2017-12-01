@@ -1,7 +1,11 @@
 version: "2"
 
 syncs:
-  docker-sync:
+  docker-sync-drupal:
     src: '../../../drupal-code-base'
+    sync_userid: '82'
+    sync_excludes: ['.gitignore', '.git/', '.idea/']
+  docker-sync-drupal-config:
+    src: '../../../drupal-code-base/config/config'
     sync_userid: '82'
     sync_excludes: ['.gitignore', '.git/', '.idea/']

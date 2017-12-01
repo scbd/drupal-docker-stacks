@@ -1,7 +1,7 @@
-site_name: Drupal Docker Stacks (UN Biodiversity)
+site_name: Drupal Docker Stacks <br>(UN Biodiversity)
 
 repo_url: https://github.com/scbd/drupal-docker-stacks
-site_description: 'Docker Drupal stacks for loca, development, staging and production environments.  Inspired from wodby/docker4drupal'
+site_description: 'Docker Drupal stacks for local, development, staging and production environments.  Inspired from wodby/docker4drupal'
 theme: readthedocs
 
 markdown_extensions:

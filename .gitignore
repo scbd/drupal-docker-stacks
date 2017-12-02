@@ -1,5 +1,5 @@
 .docker-sync
-nooutput.out
+*.out
 .DS_Store
 *.docker-sync/*
 *.init.log*

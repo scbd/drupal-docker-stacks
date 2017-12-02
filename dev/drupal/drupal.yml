@@ -46,6 +46,7 @@ services:
     deploy:
       labels:
         - "traefik.enable=false"
+        - "com.centurylinklabs.watchtower.enable"
       replicas: 1
       resources:
         limits:
@@ -115,7 +116,12 @@ services:
       update_config:
         parallelism: 1
         delay: 10s
-
+  #auto deploys new 
+  watchtower:
+    image: v2tec/watchtower
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: --interval 30 --cleanup true --label-enable true
 #  webgrind:
 #    image: wodby/webgrind:1.5-1.0.0
 #    environment:

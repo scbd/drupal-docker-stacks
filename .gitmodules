@@ -1,0 +1,3 @@
+[submodule "code-base"]
+	path = code-base
+	url = https://github.com/scbd/drupal-code-base.git

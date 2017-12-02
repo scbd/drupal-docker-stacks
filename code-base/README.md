@@ -22,3 +22,5 @@ TODO:
 - cron container
 
 - circle ci - simple tests
+
+- test submodule commit

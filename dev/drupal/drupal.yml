@@ -7,8 +7,6 @@ networks:
 volumes:
   db-data:
     external: true
-  db-init-data:
-    external: true
   drupal-files:
     external: true
 secrets:

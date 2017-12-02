@@ -6,13 +6,15 @@ theme: readthedocs
 
 markdown_extensions:
   - toc:
-      permalink: True
+      permalink: true
 
 pages:
-  - Getting Started: 'index.md'
+  - Introduction: 'index.md'
+  - Quick Start: 'quick.md'
+  - Requirements: 'requirements.md'
+  - Stacks:
+    - 'local': 'index.md'
   - Containers:
     - 'Nginx': 'containers/nginx.md'
     - 'PHP': 'containers/php.md'
     - 'MariaDB': 'containers/mariadb.md'
-  - Stacks:
-    - 'local': 'index.md'

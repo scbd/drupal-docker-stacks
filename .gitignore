@@ -2,3 +2,4 @@
 nooutput.out
 .DS_Store
 *.docker-sync/*
+*.init.log*

@@ -77,7 +77,7 @@ The helper stack [portainer](https://portainer.io/) a tool to help you manage yo
 * [drupal-8-website-composer-template](https://another.ink/journal/drupal-8-website-composer-template)
 * [managing-drupal-8-configuration-with-git](https://another.ink/journal/managing-drupal-8-configuration-with-git)
 * [drupal-8-configuration-management-solving-configuration-conundrum](https://chromatichq.com/blog/drupal-8-configuration-management-solving-configuration-conundrum)
-* [drush - why don't you use drupal for your site](https://drushcommands.com(https://drushcommands.com)
+* [drush - why don't you use drupal for your site](https://drushcommands.com)
 * [composer](https://getcomposer.org/doc/)
 * [drupal 8 docs](https://www.drupal.org/docs/8)
 * [s3-bucket-configuration-with-drupal-8](http://www.tothenew.com/blog/s3-bucket-configuration-with-drupal-8/)

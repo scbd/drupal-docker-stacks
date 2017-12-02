@@ -74,6 +74,7 @@ The helper stack [portainer](https://portainer.io/) a tool to help you manage yo
 
 ## Reference
 
+### Drupal developer resources
 * [drupal-8-website-composer-template](https://another.ink/journal/drupal-8-website-composer-template)
 * [managing-drupal-8-configuration-with-git](https://another.ink/journal/managing-drupal-8-configuration-with-git)
 * [drupal-8-configuration-management-solving-configuration-conundrum](https://chromatichq.com/blog/drupal-8-configuration-management-solving-configuration-conundrum)
@@ -89,17 +90,18 @@ The helper stack [portainer](https://portainer.io/) a tool to help you manage yo
 * [drupal-8-ci-cd-with-docker-circleci-example-part-29](https://blog.wodby.com/drupal-8-ci-cd-with-docker-circleci-example-part-2-b04ff32713b9)
 * [https://www.drupal.org/node/803746](https://www.drupal.org/node/803746)
 * [Docker-DrupalHeart](https://www.drupalheart.com/sites/default/files/drupalheart-presentations/Docker-DrupalHeart%20Camp%20Zagreb%202017.pdf)
-* [using-docker-multi-devmulti-platform-development]([https://www.drupalasheville.com/2017/session/using-docker-multi-devmulti-platform-development)
+* [using-docker-multi-devmulti-platform-development](https://www.drupalasheville.com/2017/session/using-docker-multi-devmulti-platform-development)
 
 * [drupal lerning curve](https://www.webpagefx.com/blog/web-design/drupal-learning-curve/)
 * [boycott docker](https://www.google.ca/url?sa=t&rct=j&q=&esrc=s&source=web&cd=7&cad=rja&uact=8&ved=0ahUKEwjxtKaF-OvXAhWF14MKHRibB48QFghQMAY&url=https%3A%2F%2Fcontainerjournal.com%2F2016%2F12%2F19%2Fpeople-want-boycott-docker%2F&usg=AOvVaw0gTOBDR5wcSUmtAmnnn2vw)
-State of Drupal:
+
+### State of Drupal:
 * [Node vs PHP](https://www.infoworld.com/article/3166109/application-development/php-vs-nodejs-an-epic-battle-for-developer-mind-share.html)
 * [Drupal we need to talk](http://davehall.com.au/blog/dave/2017/04/19/drupal-we-need-talk)
 * [CMS 2017](https://cms2cms.com/blog/trending-in-cms-where-to-move-in-2017-provocative-analysis)
 * [State of Drupal](https://www.drupal.org/forum/general/general-discussion/2017-07-21/state-of-drupal)
 
-Trends:
+### Trends:
 * [drupal](https://trends.google.com/trends/explore?date=all&q=drupal)
 * [nodejs](https://trends.google.com/trends/explore?date=all&q=nodejs)
 * [Vue](https://trends.google.com/trends/explore?date=today%205-y&q=vuejs)

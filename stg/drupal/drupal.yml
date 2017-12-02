@@ -21,7 +21,7 @@ secrets:
 
 services:
   php:
-    image: scbd/drupal-code-base:dev
+    image: scbd/drupal-code-base:stg
     networks:
       - drupal
     volumes:

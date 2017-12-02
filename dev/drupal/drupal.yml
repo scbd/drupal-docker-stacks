@@ -46,7 +46,7 @@ services:
     deploy:
       labels:
         - "traefik.enable=false"
-        - "com.centurylinklabs.watchtower.enable"
+        - "com.centurylinklabs.watchtower.enable=true"
       replicas: 1
       resources:
         limits:
@@ -72,14 +72,17 @@ services:
       NGINX_BACKEND_HOST: php
       NGINX_SERVER_ROOT: /var/www/html/web
     volumes:
-      - docker-sync-drupal:/var/www/html
+      - drupal-files:/var/www/html
     deploy:
       labels:
         - "traefik.enable=true"
+        - "traefik.backend.loadbalancer.method=wrr"
+        - "traefik.backend.loadbalancer.swarm=true"
+        - "traefik.weight=10"
         - "traefik.port=80"
         - "traefik.backend=nginx"
         - "traefik.docker.network=proxy"
-        - "traefik.frontend.rule=Host:drupal.localhost"
+        - "traefik.frontend.rule=Host:drupal.cbddev.xyz"
       replicas: 1
       resources:
         limits:
@@ -116,9 +119,11 @@ services:
       update_config:
         parallelism: 1
         delay: 10s
-  #auto deploys new 
+  #auto deploys new
   watchtower:
     image: v2tec/watchtower
+    networks:
+      - drupal
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     command: --interval 30 --cleanup true --label-enable true

@@ -1,0 +1,136 @@
+version: "3.4"
+networks:
+  drupal:
+    external: true
+  proxy:
+    external: true
+volumes:
+  db-data:
+    external: true
+  drupal-files:
+    external: true
+secrets:
+  AURORA_PASS:
+      external: true
+  AURORA_USER:
+      external: true
+  settings.php:
+      external: true
+  SRCKEY:
+      external: true
+
+services:
+  php:
+    image: scbd/drupal-code-base:dev
+    networks:
+      - drupal
+    volumes:
+      - drupal-files:/var/www/html
+    secrets:
+      - SRCKEY
+      - settings.php
+      - source: settings.php
+        target: /var/www/html/web/sites/default/settings.php
+        uid: '82'
+        gid: '82'
+        mode: 0555
+    environment:
+      PHP_SITE_NAME: UN Biodiversity
+      PHP_HOST_NAME: drupal.staging.cbd.int
+      PHP_SENDMAIL_PATH: /usr/sbin/sendmail -t -i -S mailhog:1025
+      PHP_FPM_CLEAR_ENV: "no"
+
+    deploy:
+      labels:
+        - "traefik.enable=false"
+        - "com.centurylinklabs.watchtower.enable=true"
+      replicas: 1
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 512M
+      restart_policy:
+        condition: any
+        delay: 10s
+        max_attempts: 3
+        window: 120s
+      update_config:
+        parallelism: 1
+        delay: 10s
+
+  nginx:
+    image: wodby/drupal-nginx:8-1.13-3.0.1
+    networks:
+      - proxy
+      - drupal
+    environment:
+      NGINX_STATIC_CONTENT_OPEN_FILE_CACHE: "off"
+      NGINX_ERROR_LOG_LEVEL: debug
+      NGINX_BACKEND_HOST: php
+      NGINX_SERVER_ROOT: /var/www/html/web
+    volumes:
+      - drupal-files:/var/www/html
+    deploy:
+      labels:
+        - "traefik.enable=true"
+        - "traefik.backend.loadbalancer.method=wrr"
+        - "traefik.backend.loadbalancer.swarm=true"
+        - "traefik.weight=10"
+        - "traefik.port=80"
+        - "traefik.backend=nginx"
+        - "traefik.docker.network=proxy"
+        - "traefik.frontend.rule=Host:drupal.staging.cbd.int"
+      replicas: 1
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 512M
+      restart_policy:
+        condition: any
+        delay: 10s
+        max_attempts: 3
+        window: 120s
+      update_config:
+        parallelism: 1
+        delay: 10s
+
+  mailhog:
+    image: mailhog/mailhog
+    networks:
+      - proxy
+    deploy:
+      labels:
+        - 'traefik.backend=mailhog'
+        - 'traefik.port=8025'
+        - 'traefik.frontend.rule=Host:mailhog.drupal.localhost'
+      replicas: 1
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 512M
+      restart_policy:
+        condition: any
+        delay: 10s
+        max_attempts: 3
+        window: 120s
+      update_config:
+        parallelism: 1
+        delay: 10s
+  #auto deploys new
+  watchtower:
+    image: v2tec/watchtower
+    networks:
+      - drupal
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: --interval 30 --cleanup true --label-enable true
+#  webgrind:
+#    image: wodby/webgrind:1.5-1.0.0
+#    environment:
+#      WEBGRIND_PROFILER_DIR: /mnt/files/xdebug/profiler
+#    labels:
+#      - 'traefik.backend=webgrind'
+#      - 'traefik.port=8080'
+#      - 'traefik.frontend.rule=Host:webgrind.drupal.docker.localhost'
+#    volumes:
+#      - files:/mnt/files

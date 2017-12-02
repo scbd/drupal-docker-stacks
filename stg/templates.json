@@ -1,0 +1,13 @@
+[{
+  "type": "stack",
+  "title": "Drupal",
+  "description": "SCBD drupal dev ",
+  "note": "Deploys SCBD's drupal code base with related services.",
+  "categories": ["CMS"],
+  "platform": "linux",
+  "logo": "https://raw.githubusercontent.com/scbd/stacks/master/dev/drupal/drupal-scbd.png",
+  "repository": {
+    "url": "https://github.com/scbd/stacks",
+    "stackfile": "dev/drupal/drupal.yml"
+  }
+}]

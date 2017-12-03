@@ -114,8 +114,8 @@ The helper stack [portainer](https://portainer.io/) a tool to help you manage yo
 
 ## TODO
 
-- cron container
 - memcache
 - varnish
+- solr
 
 This project is licensed under the MIT open source license.

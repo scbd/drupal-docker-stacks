@@ -146,8 +146,8 @@ services:
     networks:
       - drupal
     environment:
-      CRON_TAIL: true
-      CRON_STRINGS: 0 */3 * * * root wget http://drupal.localhost/cron/B5BR_PyII7TBkmBfuh6NTD_PE1m4hyevQBcmUol1koAKdjqpGXmIqyDvO9BUJRBlEBBEpcOYqw
+      CRON_TAIL: "true"
+      CRON_STRINGS: "0 */3 * * * root wget http://drupal.localhost/cron/B5BR_PyII7TBkmBfuh6NTD_PE1m4hyevQBcmUol1koAKdjqpGXmIqyDvO9BUJRBlEBBEpcOYqw"
     deploy:
       labels:
         - "traefik.enable=false"

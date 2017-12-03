@@ -56,7 +56,7 @@ services:
         window: 120s
       update_config:
         parallelism: 1
-        delay: 10s
+        delay: 240s
 
   nginx:
     image: wodby/drupal-nginx:8-1.13-3.0.1
@@ -124,6 +124,45 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     command: --interval 30 --cleanup true --label-enable true
+    deploy:
+      labels:
+        - "traefik.enable=false"
+      replicas: 1
+      resources:
+        limits:
+          cpus: '0.10'
+          memory: 50M
+      restart_policy:
+        condition: any
+        delay: 10s
+        max_attempts: 3
+        window: 120s
+      update_config:
+        parallelism: 1
+        delay: 10s
+  cron:
+    image: xordiv/docker-alpine-cron:latest
+    networks:
+      - drupal
+    environment:
+      CRON_TAIL: true
+      CRON_STRINGS: 0 */3 * * * root wget http://drupal.localhost/cron/B5BR_PyII7TBkmBfuh6NTD_PE1m4hyevQBcmUol1koAKdjqpGXmIqyDvO9BUJRBlEBBEpcOYqw
+    deploy:
+      labels:
+        - "traefik.enable=false"
+      replicas: 1 # no more then one or boom
+      resources:
+        limits:
+          cpus: '0.10'
+          memory: 50M
+      restart_policy:
+        condition: any
+        delay: 10s
+        max_attempts: 3
+        window: 120s
+      update_config:
+        parallelism: 1
+        delay: 10s
 #  webgrind:
 #    image: wodby/webgrind:1.5-1.0.0
 #    environment:

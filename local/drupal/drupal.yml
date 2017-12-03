@@ -1,18 +1,23 @@
 version: "3.4"
+
 networks:
   drupal:
     external: true
   proxy:
     external: true
+
 volumes:
   db-data:
     external: true
-  db-init-data:
+  webgrind-data:
+    external: true
+  cron-data:
     external: true
   docker-sync-drupal:
     external: true
   docker-sync-drupal-config:
     external: true
+
 secrets:
   AURORA_PASS:
       external: true
@@ -55,7 +60,7 @@ services:
         window: 120s
       update_config:
         parallelism: 1
-        delay: 10s
+        delay: 240s
 
   nginx:
     image: wodby/drupal-nginx:8-1.13-3.0.1
@@ -95,6 +100,7 @@ services:
       - proxy
     deploy:
       labels:
+        - "traefik.enable=true"
         - 'traefik.backend=mailhog'
         - 'traefik.port=8025'
         - 'traefik.frontend.rule=Host:mailhog.drupal.localhost'
@@ -122,8 +128,7 @@ services:
     networks:
       - proxy
     volumes:
-#      - db-init-data:/docker-entrypoint-initdb.d # Place init .sql file(s) here.
-      - db-data:/var/lib/mysql # I want to manage volumes manually.
+      - db-data:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: drupal
       MYSQL_DATABASE: drupal
@@ -152,13 +157,75 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     command: --interval 30 --cleanup true --label-enable true
-#  webgrind:
-#    image: wodby/webgrind:1.5-1.0.0
-#    environment:
-#      WEBGRIND_PROFILER_DIR: /mnt/files/xdebug/profiler
-#    labels:
-#      - 'traefik.backend=webgrind'
-#      - 'traefik.port=8080'
-#      - 'traefik.frontend.rule=Host:webgrind.drupal.docker.localhost'
-#    volumes:
-#      - files:/mnt/files
+    deploy:
+      labels:
+        - "traefik.enable=false"
+      replicas: 1
+      resources:
+        limits:
+          cpus: '0.10'
+          memory: 50M
+      restart_policy:
+        condition: any
+        delay: 10s
+        max_attempts: 3
+        window: 120s
+      update_config:
+        parallelism: 1
+        delay: 10s
+  cron:
+    image: xordiv/docker-alpine-cron:latest
+    networks:
+      - drupal
+    environment:
+      CRON_TAIL: true
+      CRON_STRINGS: 0 */3 * * * root wget http://drupal.localhost/cron/B5BR_PyII7TBkmBfuh6NTD_PE1m4hyevQBcmUol1koAKdjqpGXmIqyDvO9BUJRBlEBBEpcOYqw
+    deploy:
+      labels:
+        - "traefik.enable=false"
+      replicas: 1 # no more then one or boom
+      resources:
+        limits:
+          cpus: '0.10'
+          memory: 50M
+      restart_policy:
+        condition: any
+        delay: 10s
+        max_attempts: 3
+        window: 120s
+      update_config:
+        parallelism: 1
+        delay: 10s
+
+
+
+
+
+  # webgrind:
+  #   image: wodby/webgrind:1.5-1.0.0
+  #   networks:
+  #     - proxy
+  #   environment:
+  #     WEBGRIND_PROFILER_DIR: /xdebug/profiler
+  #   volumes:
+  #    - webgrind-data:/xdebug/profiler
+  #   deploy:
+  #     labels:
+  #       - "traefik.enable=true"
+  #       - 'traefik.backend=webgrind'
+  #       - 'traefik.port=8080'
+  #       - "traefik.docker.network=proxy"
+  #       - 'traefik.frontend.rule=Host:webgrind.localhost'
+  #     replicas: 1
+  #     resources:
+  #       limits:
+  #         cpus: '0.10'
+  #         memory: 50M
+  #     restart_policy:
+  #       condition: any
+  #       delay: 10s
+  #       max_attempts: 3
+  #       window: 120s
+  #     update_config:
+  #       parallelism: 1
+  #       delay: 10s

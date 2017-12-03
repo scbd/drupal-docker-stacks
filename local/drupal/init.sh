@@ -29,7 +29,8 @@ done
 echo
 echo $('pwd')
 docker volume create db-data
-docker volume create db-init-data
+docker volume create cron-data
+docker volume create webgrind
 docker volume create docker-sync-drupal
 docker volume create docker-sync-drupal-config
 docker network create --driver overlay --subnet 10.0.12.0/24 --opt encrypted=true drupal

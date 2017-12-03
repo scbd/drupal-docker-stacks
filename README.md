@@ -95,6 +95,7 @@ The helper stack [portainer](https://portainer.io/) a tool to help you manage yo
 * [drupal lerning curve](https://www.webpagefx.com/blog/web-design/drupal-learning-curve/)
 * [boycott docker](https://www.google.ca/url?sa=t&rct=j&q=&esrc=s&source=web&cd=7&cad=rja&uact=8&ved=0ahUKEwjxtKaF-OvXAhWF14MKHRibB48QFghQMAY&url=https%3A%2F%2Fcontainerjournal.com%2F2016%2F12%2F19%2Fpeople-want-boycott-docker%2F&usg=AOvVaw0gTOBDR5wcSUmtAmnnn2vw)
 
+* [docksal](http://docksal.readthedocs.io/en/master/)
 ### State of Drupal:
 * [Node vs PHP](https://www.infoworld.com/article/3166109/application-development/php-vs-nodejs-an-epic-battle-for-developer-mind-share.html)
 * [Drupal we need to talk](http://davehall.com.au/blog/dave/2017/04/19/drupal-we-need-talk)
@@ -110,5 +111,11 @@ The helper stack [portainer](https://portainer.io/) a tool to help you manage yo
 * [vagrant](https://trends.google.com/trends/explore?date=all&q=vagrant)
 
 ## License
+
+## TODO
+
+- cron container
+- memcache
+- varnish
 
 This project is licensed under the MIT open source license.

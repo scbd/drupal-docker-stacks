@@ -5,10 +5,8 @@ networks:
   proxy:
     external: true
 volumes:
-  db-data:
-    external: true
   drupal-files:
-    external: true
+      external: true    
 secrets:
   AURORA_PASS:
       external: true

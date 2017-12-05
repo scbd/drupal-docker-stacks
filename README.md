@@ -36,9 +36,11 @@ sh start.sh
 sh stop.sh
 ```
 ```bash
-sh stop.sh
+sh export.sh
 ```
-
+```bash
+ sh require.sh drupal/module
+ ```
 ## Documentation
 Full documentation is available at [http://drupal-docker-stacks.readthedocs.io](http://drupal-docker-stacks.readthedocs.io/en/latest/)
 

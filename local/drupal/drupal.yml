@@ -27,10 +27,12 @@ secrets:
       external: true
   SRCKEY:
       external: true
-
+  config.json:
+      external: true
 services:
   php:
-    image: scbd/drupal-code-base:dev
+    # image: scbd/drupal-code-base:dev
+    image: wodby/drupal-php:7.1-3.0.0
     networks:
       - proxy
     volumes:
@@ -174,12 +176,12 @@ services:
         parallelism: 1
         delay: 10s
   cron:
-    image: xordiv/docker-alpine-cron:latest
+    image: scbd/drupal-cron-scripts:dev
     networks:
       - drupal
     environment:
-      CRON_TAIL: "true"
-      CRON_STRINGS: "0 */3 * * * root wget http://drupal.localhost/cron/B5BR_PyII7TBkmBfuh6NTD_PE1m4hyevQBcmUol1koAKdjqpGXmIqyDvO9BUJRBlEBBEpcOYqw"
+      # CRON_TAIL: "true"
+      CRON_STRINGS: "0 */3 * * * root curl http://drupal.localhost/cron/B5BR_PyII7TBkmBfuh6NTD_PE1m4hyevQBcmUol1koAKdjqpGXmIqyDvO9BUJRBlEBBEpcOYqw \n 1-59 * * * * root node modules/MessageSender.js drupal-backup dev\n"
     deploy:
       labels:
         - "traefik.enable=false"
@@ -196,7 +198,43 @@ services:
       update_config:
         parallelism: 1
         delay: 10s
-
+# docker service create                                                       \
+#     --name              gaia                                                \
+#     --replicas          1                                                   \
+#     --publish           mode=host,target=8000                               \
+#     --container-label   SERVICE_8000=gaia                                   \
+#     --limit-cpu         40                                                  \
+#     --limit-memory      192M                                                \
+#     --env               CONFIG_FILE=/run/secrets/config.json                \
+#     --env               GAIA_WORKERS=1                                      \
+#     --env               SERVICE_NAME={{.Service.Name}}                      \
+#     --env               NODE_ENV=production                                 \
+#     --secret            config.json                                  \
+#     --update-delay      10s                                                 \gaiatest
+    # gaiatest
+  # gaia:
+  #   image: gaiatest
+  #   networks:
+  #     - drupal
+  #   secrets:
+  #     - source: config.json
+  #       target: /config/config.json
+  #   deploy:
+  #     labels:
+  #       - "traefik.enable=false"
+  #     replicas: 1 # no more then one or boom
+  #     resources:
+  #       limits:
+  #         cpus: '0.10'
+  #         memory: 50M
+  #     restart_policy:
+  #       condition: any
+  #       delay: 10s
+  #       max_attempts: 3
+  #       window: 120s
+  #     update_config:
+  #       parallelism: 1
+  #       delay: 10s
 
 
 

@@ -1,3 +1,5 @@
+docker volume create docker-sync-drupal
+docker volume create docker-sync-drupal-config
 nohup docker-sync start &
 docker stack deploy -c drupal.yml DRUPAL
 

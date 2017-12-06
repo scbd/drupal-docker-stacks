@@ -52,7 +52,6 @@ services:
       restart_policy:
         condition: any
         delay: 10s
-        max_attempts: 3
         window: 120s
       update_config:
         parallelism: 1
@@ -69,7 +68,9 @@ services:
       NGINX_BACKEND_HOST: php
       NGINX_SERVER_ROOT: /var/www/html/web
     volumes:
-      - drupal-files:/var/www/html
+      - type: volume
+        source: drupal-files
+        target: /var/www/html
     deploy:
       labels:
         - "traefik.enable=true"
@@ -88,7 +89,6 @@ services:
       restart_policy:
         condition: any
         delay: 10s
-        max_attempts: 3
         window: 120s
       update_config:
         parallelism: 1

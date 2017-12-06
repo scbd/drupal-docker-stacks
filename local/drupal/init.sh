@@ -36,3 +36,6 @@ docker volume create docker-sync-drupal-config
 docker network create --driver overlay --subnet 10.0.12.0/24 --opt encrypted=true drupal
 nohup docker-sync start &
 docker stack deploy -c drupal.yml DRUPAL
+
+sleep 4s
+docker exec -ti DRUPAL_php.1.$(docker service ps -f 'name=DRUPAL_php.1' DRUPAL_php -q) php /var/www/html/sh/actions/security-checker.phar security:check $APP_ROOT/composer.lock

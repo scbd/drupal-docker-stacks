@@ -1,12 +1,13 @@
 version: "3.4"
 networks:
-  drupal:
-    external: true
+  default:
+    external:
+      name: drupal
   proxy:
     external: true
 volumes:
   drupal-files:
-      external: true    
+      external: true
 secrets:
   AURORA_PASS:
       external: true
@@ -20,8 +21,6 @@ secrets:
 services:
   php:
     image: scbd/drupal-code-base:dev
-    networks:
-      - drupal
     volumes:
       - drupal-files:/var/www/html
     secrets:
@@ -36,9 +35,9 @@ services:
       #ENV: local
       PHP_SITE_NAME: UN Biodiversity
       PHP_HOST_NAME: drupal.cbddev.xyz
-      PHP_SENDMAIL_PATH: /usr/sbin/sendmail -t -i -S mailhog:1025
+      PHP_SENDMAIL_PATH: /usr/sbin/sendmail -t -i -S PROXY_mailhog:1025
       PHP_FPM_CLEAR_ENV: "no"
-
+      PHP_FPM_USER : www-data
     deploy:
       labels:
         - "traefik.enable=false"
@@ -51,7 +50,6 @@ services:
       restart_policy:
         condition: any
         delay: 10s
-        max_attempts: 3
         window: 120s
       update_config:
         parallelism: 1
@@ -60,15 +58,18 @@ services:
   nginx:
     image: wodby/drupal-nginx:8-1.13-3.0.1
     networks:
+      - default
       - proxy
-      - drupal
     environment:
       NGINX_STATIC_CONTENT_OPEN_FILE_CACHE: "off"
       NGINX_ERROR_LOG_LEVEL: debug
       NGINX_BACKEND_HOST: php
       NGINX_SERVER_ROOT: /var/www/html/web
     volumes:
-      - drupal-files:/var/www/html
+      - type: volume
+        source: drupal-files
+        target: /var/www/html
+
     deploy:
       labels:
         - "traefik.enable=true"
@@ -87,7 +88,6 @@ services:
       restart_policy:
         condition: any
         delay: 10s
-        max_attempts: 3
         window: 120s
       update_config:
         parallelism: 1
@@ -96,6 +96,7 @@ services:
   mailhog:
     image: mailhog/mailhog
     networks:
+      - default
       - proxy
     deploy:
       labels:
@@ -118,8 +119,6 @@ services:
   #auto deploys new
   watchtower:
     image: v2tec/watchtower
-    networks:
-      - drupal
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     command: --interval 30 --cleanup true --label-enable true
@@ -141,8 +140,6 @@ services:
         delay: 10s
   cron:
     image: xordiv/docker-alpine-cron:latest
-    networks:
-      - drupal
     environment:
       CRON_TAIL: "true"
       CRON_STRINGS: "0 */3 * * * root wget http://drupal.localhost/cron/B5BR_PyII7TBkmBfuh6NTD_PE1m4hyevQBcmUol1koAKdjqpGXmIqyDvO9BUJRBlEBBEpcOYqw"

@@ -11,6 +11,10 @@ while true; do
         * ) echo "Please answer yes or no.";;
     esac
 done
-docker volume create drupal-files
+
+docker volume create docker volume create --driver local \
+    --opt type=tmpfs \
+    --opt device=tmpfs \
+    drupal-files
 docker network create --driver overlay --subnet 10.0.12.0/24 --opt encrypted=true drupal
 docker stack deploy -c drupal.yml DRUPAL

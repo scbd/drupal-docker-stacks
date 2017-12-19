@@ -7,7 +7,7 @@ networks:
     external: true
 
 volumes:
-  db-data-test:
+  db-data:
     external: true
   webgrind-data:
     external: true
@@ -130,7 +130,7 @@ services:
     networks:
       - proxy
     volumes:
-      - db-data-test:/var/lib/mysql
+      - db-data:/var/lib/mysql
       - ~/.secrets/db-init:/docker-entrypoint-initdb.d
     environment:
       MYSQL_ROOT_PASSWORD: drupal

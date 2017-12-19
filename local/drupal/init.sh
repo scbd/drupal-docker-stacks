@@ -21,7 +21,7 @@ while true; do
     read -p "Would you like to bring up dependandent stacks PROXY && MANAGE? (Y or N)
      " yn
     case $yn in
-        [Yy]* ) $(tput sgr0); pushd ../proxy > $OUTLOG; sh init.sh; popd > $OUTLOG; pushd ../manage > $OUTLOG; sh init.sh; popd > $OUTLOG; break > $OUTLOG;;
+        [Yy]* ) $(tput sgr0); pushd ../proxy; sh init.sh; popd; pushd ../manage; sh init.sh; popd; break;;
         [Nn]* ) $(tput sgr0); break;;
         * ) echo "Please answer yes or no.";;
     esac
@@ -37,5 +37,5 @@ docker network create --driver overlay --subnet 10.0.12.0/24 --opt encrypted=tru
 nohup docker-sync start &
 docker stack deploy -c drupal.yml DRUPAL
 
-sleep 4s
+sleep 10s
 docker exec -ti DRUPAL_php.1.$(docker service ps -f 'name=DRUPAL_php.1' DRUPAL_php -q) php /var/www/html/sh/actions/security-checker.phar security:check $APP_ROOT/composer.lock

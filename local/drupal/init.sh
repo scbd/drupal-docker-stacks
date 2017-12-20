@@ -4,7 +4,7 @@
 
 while true; do
     read -p "Would you like to reload your docker secrets? (Y or N)
-     such as: AURORA_USER, AURORA_PASSWORD, config-dev, SRCKEY
+     such as: Drupal requires secrets, if this is your first time initializing.  Choose yes.
      " yn
     case $yn in
         [Yy]* ) $(tput sgr0); sh ../secrets.sh; break;;
@@ -15,6 +15,7 @@ done
 
 while true; do
     read -p "Would you like to bring up dependandent stacks PROXY && MANAGE? (Y or N)
+    If this is your first tim initializing drupal choose yes.
      " yn
     case $yn in
         [Yy]* ) $(tput sgr0); pushd ../proxy; sh init.sh; popd; pushd ../manage; sh init.sh; popd; break;;

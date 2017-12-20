@@ -13,16 +13,18 @@ Drupal docker stacks provides and utilizes tools in order to synchronize environ
 * Docker CE 17.04.0+ supporting compose file format 3.2+, get it [here](https://docs.docker.com/engine/installation/)
 * Docker-sync in order to mount a mac drive to docker, get it [here](http://docker-sync.io/) or ```gem install docker-sync ```
 * Access to private repo https://github.com/scbd/drupal-config
-* Required SCBD secrets
+* git config (set up with your account which has access ot the private repo)
+* Required SCBD secrets in order to run drupal
   1. SRCKEY - key to decrypt encrypted docker image
   2. db-init
-  3. DRUPAL_ADMIN_USER
-  4. DRUPAL_ADMIN_PASS
-  5. S3ID
-  6. S3PASS
+  3. S3ID
+  4. S3PASS
 * Supplementary SCBD secrets
   1. AURORA_USER - your user for the cloud sql
   2. AURORA_PASS - your pass for the cloud sql
+  3. DRUPAL_ADMIN_USER
+  4. DRUPAL_ADMIN_PASS
+  
 > Request private access and secrets from it@cbd.int. Also our cloud based sql is ip restricted, you will need to provide your static ip for local development.
 
 ## Quick Start - drupal local initialization

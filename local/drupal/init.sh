@@ -1,11 +1,7 @@
 # set host names
-# create aliases
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-WHITE='\033[1;37m'
-OUTLOG=$(.init.log.$(openssl rand -base64 6))
 
-echo "${WHITE}"
+
+
 while true; do
     read -p "Would you like to reload your docker secrets? (Y or N)
      such as: AURORA_USER, AURORA_PASSWORD, config-dev, SRCKEY
@@ -16,7 +12,7 @@ while true; do
         * ) echo "Please answer yes or no.";;
     esac
 done
-echo "${WHITE}"
+
 while true; do
     read -p "Would you like to bring up dependandent stacks PROXY && MANAGE? (Y or N)
      " yn

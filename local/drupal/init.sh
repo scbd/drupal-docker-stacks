@@ -39,5 +39,6 @@ docker stack deploy -c drupal.yml DRUPAL
 
 sh ./wait-for-it.sh localhost:3306 --timeout=0 --strict -- sh ./init-db.sh
 
-sleep 2s
+echo "Wiating for php container to impliment pachage security check ....."
+sleep 10s
 docker exec -ti DRUPAL_php.1.$(docker service ps -f 'name=DRUPAL_php.1' DRUPAL_php -q) php /var/www/html/sh/actions/security-checker.phar security:check $APP_ROOT/composer.lock

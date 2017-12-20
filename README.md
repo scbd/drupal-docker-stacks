@@ -26,16 +26,18 @@ Drupal docker stacks provides and utilizes tools in order to synchronize environ
   2. AURORA_PASS - your pass for the cloud sql
 > Request private access and secrets from it@cbd.int. Also our cloud based sql is ip restricted, you will need to provide your static ip for local development.
 
-## Quick Start
+## Quick Start - drupal local initialization
 Place your secrets in your home directory $HOME/.secrets/
 ```bash
 bash -c "$(curl -fsSL https://tinyurl.com/y8zkw2h6)" 
 ```
 
-## Quick Commands From /local/drupal/
+## Quick Commands From /local/drupal/ once initialized
+To start drupal after stopped
 ```bash
 sh start.sh
 ```
+To start drupal from running in the back ground
 ```bash
 sh stop.sh
 ```
@@ -43,6 +45,7 @@ To export config changes for git commit
 ```bash
 sh export.sh
 ```
+To require a drupal module or theme
 ```bash
  sh require.sh drupal/module
  ```

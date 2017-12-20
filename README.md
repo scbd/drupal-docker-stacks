@@ -60,8 +60,11 @@ Full documentation is available at [http://drupal-docker-stacks.readthedocs.io](
 
 ## Stacks
 http://drupal.localhost/
+
 https://drupal.cbddev.xyz/
+
 https://drupal.staging.cbd.int/
+
 ### The Drupal Docker Stack:
 
 | Stack      | yml                |

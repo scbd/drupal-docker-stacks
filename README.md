@@ -30,7 +30,7 @@ Drupal docker stacks provides and utilizes tools in order to synchronize environ
 ## Quick Start - drupal local initialization
 Place your secrets in your home directory $HOME/.secrets/
 ```bash
-bash -c "$(curl -fsSL https://tinyurl.com/y8zkw2h6)" 
+bash -c "$(curl -fsSL https://tinyurl.com/y8k7f2f4)"  
 ```
 
 ## Quick Commands From /local/drupal/ once initialized

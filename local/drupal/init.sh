@@ -45,7 +45,7 @@ echo "SQL initialized"
 
 echo "INstalling composer packages"
 docker exec -ti DRUPAL_php.1.$(docker service ps -f 'name=DRUPAL_php.1' DRUPAL_php -q) bash -c "sudo -u www-data composer install"
-docker exec -ti DRUPAL_php.1.$(docker service ps -f 'name=DRUPAL_php.1' DRUPAL_php -q)  bash -c "sudo -u www-data composer status -d=$APP_ROOT"
+docker exec -ti DRUPAL_php.1.$(docker service ps -f 'name=DRUPAL_php.1' DRUPAL_php -q)  bash -c "sudo -u www-data composer status"
 echo "Wiating for php container to impliment pachage security check ....."
 sleep 30s
 docker exec -ti DRUPAL_php.1.$(docker service ps -f 'name=DRUPAL_php.1' DRUPAL_php -q) php /var/www/html/sh/actions/security-checker.phar security:check $APP_ROOT/composer.lock

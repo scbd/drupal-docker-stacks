@@ -37,7 +37,7 @@ docker network create --driver overlay --subnet 10.0.12.0/24 --opt encrypted=tru
 nohup docker-sync start &
 docker stack deploy -c drupal.yml DRUPAL
 
-sh ./wait-for-it.sh DRUPAL_maria:3306 --timeout=0 --strict -- sh ./init-db.sh
+sh ./wait-for-it.sh D DRUPAL_mariadb:3306 --timeout=0 --strict -- sh ./init-db.sh
 
 sleep 2s
 docker exec -ti DRUPAL_php.1.$(docker service ps -f 'name=DRUPAL_php.1' DRUPAL_php -q) php /var/www/html/sh/actions/security-checker.phar security:check $APP_ROOT/composer.lock

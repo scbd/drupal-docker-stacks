@@ -37,8 +37,14 @@ docker network create --driver overlay --subnet 10.0.12.0/24 --opt encrypted=tru
 nohup docker-sync start &
 docker stack deploy -c drupal.yml DRUPAL
 
-sh ./wait-for-it.sh localhost:3306 --timeout=0 --strict -- sh ./init-db.sh
+sh ./wait-for-it.sh localhost:3306 --timeout=0 --strict -- echo "SQL is running"
+echo "Wiating for SQL initialization ....."
+sleep 10s
+sh ./init-db.sh
+echo "SQL initialized"
 
 echo "Wiating for php container to impliment pachage security check ....."
-sleep 10s
+sleep 30s
 docker exec -ti DRUPAL_php.1.$(docker service ps -f 'name=DRUPAL_php.1' DRUPAL_php -q) php /var/www/html/sh/actions/security-checker.phar security:check $APP_ROOT/composer.lock
+
+echo "drupal ready"

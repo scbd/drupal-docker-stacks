@@ -36,7 +36,7 @@ docker stack deploy -c drupal.yml DRUPAL
 
 sh ./wait-for-it.sh localhost:3306 --timeout=0 --strict -- echo "SQL is running"
 echo "Wiating for SQL initialization ....."
-sleep 10s
+sleep 5s
 sh ./init-db.sh
 echo "SQL initialized"
 
@@ -48,6 +48,6 @@ sleep 5s
 docker exec -ti DRUPAL_php.1.$(docker service ps -f 'name=DRUPAL_php.1' DRUPAL_php -q) php /var/www/html/sh/actions/security-checker.phar security:check composer.lock
 
 echo "Initializing drupal local"
-sleep 15s
+sleep 1s
 docker exec -ti DRUPAL_php.1.$(docker service ps -f 'name=DRUPAL_php.1' DRUPAL_php -q)  bash -c "sudo -u www-data composer status"
 echo "drupal ready"

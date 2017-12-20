@@ -27,26 +27,30 @@ Drupal docker stacks provides and utilizes tools in order to synchronize environ
 > Request private access and secrets from it@cbd.int. Also our cloud based sql is ip restricted, you will need to provide your static ip for local development.
 
 ## Quick Start
-Place your secrets in your home directory $HOME/.secrets/SECRET_NAME
+Place your secrets in your home directory $HOME/.secrets/
 ```bash
-git clone https://github.com/scbd/drupal-docker-stacks.git
-cd drupal-docker-stacks/local/drupal
-sh init.sh
+bash -c "$(curl -fsSL https://tinyurl.com/y8zkw2h6)" 
 ```
 
-## Quick Commands
+## Quick Commands From /local/drupal/
 ```bash
 sh start.sh
 ```
 ```bash
 sh stop.sh
 ```
+To export config changes for git commit
 ```bash
 sh export.sh
 ```
 ```bash
  sh require.sh drupal/module
  ```
+ To completely remove all drupal and data from your system
+ ```bash
+  bash -c "$(curl -fsSL https://tinyurl.com/yb9bgnmb)"
+ ```
+ 
 ## Documentation
 Full documentation is available at [http://drupal-docker-stacks.readthedocs.io](http://drupal-docker-stacks.readthedocs.io/en/latest/)
 

@@ -1,6 +1,6 @@
 # set host names
 
-
+docker swarm init
 
 while true; do
     read -p "Would you like to reload your docker secrets? (Y or N)

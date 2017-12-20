@@ -4,7 +4,7 @@ docker swarm init
 
 while true; do
     read -p "Would you like to reload your docker secrets? (Y or N)
-     such as: Drupal requires secrets, if this is your first time initializing.  Choose yes.
+    Drupal-docker requires secrets, if this is your first time initializing.  Choose yes.
      " yn
     case $yn in
         [Yy]* ) $(tput sgr0); sh ../secrets.sh; break;;

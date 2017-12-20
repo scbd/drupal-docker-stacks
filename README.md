@@ -16,11 +16,10 @@ Drupal docker stacks provides and utilizes tools in order to synchronize environ
 * Required SCBD secrets
   1. SRCKEY - key to decrypt encrypted docker image
   2. db-init
-  3. settings.php
-  4. DRUPAL_ADMIN_USER
-  5. DRUPAL_ADMIN_PASS
-  6. S3ID
-  7. S3PASS
+  3. DRUPAL_ADMIN_USER
+  4. DRUPAL_ADMIN_PASS
+  5. S3ID
+  6. S3PASS
 * Supplementary SCBD secrets
   1. AURORA_USER - your user for the cloud sql
   2. AURORA_PASS - your pass for the cloud sql

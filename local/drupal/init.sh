@@ -42,9 +42,12 @@ echo "SQL initialized"
 
 echo "INstalling composer packages"
 docker exec -ti DRUPAL_php.1.$(docker service ps -f 'name=DRUPAL_php.1' DRUPAL_php -q) bash -c "sudo -u www-data composer install"
-docker exec -ti DRUPAL_php.1.$(docker service ps -f 'name=DRUPAL_php.1' DRUPAL_php -q)  bash -c "sudo -u www-data composer status"
+
 echo "Wiating for php container to impliment pachage security check ....."
 sleep 5s
 docker exec -ti DRUPAL_php.1.$(docker service ps -f 'name=DRUPAL_php.1' DRUPAL_php -q) php /var/www/html/sh/actions/security-checker.phar security:check composer.lock
 
+echo "Initializing drupal local"
+sleep 15s
+docker exec -ti DRUPAL_php.1.$(docker service ps -f 'name=DRUPAL_php.1' DRUPAL_php -q)  bash -c "sudo -u www-data composer status"
 echo "drupal ready"

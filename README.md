@@ -24,7 +24,7 @@ Drupal docker stacks provides and utilizes tools in order to synchronize environ
   2. AURORA_PASS - your pass for the cloud sql
   3. DRUPAL_ADMIN_USER
   4. DRUPAL_ADMIN_PASS
-  
+
 > Request private access and secrets from it@cbd.int. Also our cloud based sql is ip restricted, you will need to provide your static ip for local development.
 
 ## Quick Start - drupal local initialization
@@ -52,9 +52,9 @@ To require a drupal module or theme
  ```
  To completely remove all drupal and data from your system
  ```bash
-  bash -c "$(curl -fsSL https://tinyurl.com/yb9bgnmb)"
+  bash -c "$(curl -fsSL https://tinyurl.com/y98xuzjj)"
  ```
- 
+
 ## Documentation
 Full documentation is available at [http://drupal-docker-stacks.readthedocs.io](http://drupal-docker-stacks.readthedocs.io/en/latest/)
 

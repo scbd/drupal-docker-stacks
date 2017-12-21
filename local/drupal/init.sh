@@ -41,14 +41,14 @@ sh ./init-db.sh
 echo "SQL initialized"
 
 echo "INstalling composer packages"
-docker exec -ti DRUPAL_php.1.$(docker service ps -f 'name=DRUPAL_php.1' DRUPAL_php -q) bash -c "sudo -u www-data composer install"
+docker exec -ti DRUPAL_php.1.$(docker service ps -f 'name=DRUPAL_php.1' DRUPAL_php -q) bash -c " composer install"
 
 echo "Wiating for php container to impliment pachage security check ....."
 sleep 5s
 docker exec -ti DRUPAL_php.1.$(docker service ps -f 'name=DRUPAL_php.1' DRUPAL_php -q) php /var/www/html/sh/actions/security-checker.phar security:check composer.lock
 
 echo "Import Config"
-sleep 1s
+sleep 5s
 docker exec -ti DRUPAL_php.1.$(docker service ps -f 'name=DRUPAL_php.1' DRUPAL_php -q)  bash -c "drush -r /var/www/html/web -y cim"
 docker exec -ti DRUPAL_php.1.$(docker service ps -f 'name=DRUPAL_php.1' DRUPAL_php -q)  bash -c "drush -r /var/www/html/web -y updatedb"
 docker exec -ti DRUPAL_php.1.$(docker service ps -f 'name=DRUPAL_php.1' DRUPAL_php -q)  bash -c "drush -r /var/www/html/web -y entup"

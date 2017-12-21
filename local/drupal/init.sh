@@ -14,7 +14,7 @@ while true; do
 done
 
 while true; do
-    read -p "Would you like to bring up dependandent stacks PROXY && MANAGE? (Y or N)
+    read -p "Would you like to bring up dependent stacks PROXY && MANAGE? (Y or N)
     If this is your first tim initializing drupal choose yes.
      " yn
     case $yn in
@@ -47,7 +47,9 @@ echo "Wiating for php container to impliment pachage security check ....."
 sleep 5s
 docker exec -ti DRUPAL_php.1.$(docker service ps -f 'name=DRUPAL_php.1' DRUPAL_php -q) php /var/www/html/sh/actions/security-checker.phar security:check composer.lock
 
-echo "Initializing drupal local"
+echo "Import Config"
 sleep 1s
-docker exec -ti DRUPAL_php.1.$(docker service ps -f 'name=DRUPAL_php.1' DRUPAL_php -q)  bash -c "sudo -u www-data composer status"
+docker exec -ti DRUPAL_php.1.$(docker service ps -f 'name=DRUPAL_php.1' DRUPAL_php -q)  bash -c "drush -r $APP_ROOT/web -y cim"
+
+
 echo "drupal ready"
